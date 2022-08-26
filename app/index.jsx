@@ -1,18 +1,16 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import "./index.css";
+import Popular from "./components/Popular";
 
 class App extends React.Component {
   render() {
-    const trueBool = true
     return (
-        <div>
-            Hello World!
-            { trueBool === true 
-                ? <p>True is {trueBool.toString()}</p>
-                : <p>True is falsed? {trueBool.toString()}</p>
-            }
+      <div className="light">
+        <div className="container">
+          <Popular />
         </div>
+      </div>
     );
   }
 }
