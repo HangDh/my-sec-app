@@ -1,7 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { close } from "./icons";
-import Results from "./Results";
+import { Link } from 'react-router-dom'
 
 function Instructions() {
   return (
@@ -17,24 +17,17 @@ function Instructions() {
 }
 
 class PlayerInput extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      username: "",
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+  state = {
+    username: "",
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     // Wywołaj funkcje 'onSubmit' z propsow (funkcja podawana przy tworzeniu komponentu w renderze rodzica) z parametrem 'this.state.username'
     this.props.onSubmit(this.state.username);
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({
       username: event.target.value,
     });
@@ -106,49 +99,38 @@ PlayerPreview.propTypes = {
 }
 
 export default class Battle extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      playerOne: null,
-      playerTwo: null,
-      battle: false
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleReset = this.handleReset.bind(this);
+  state = {
+    playerOne: null,
+    playerTwo: null,
   }
 
-  handleSubmit(id, player) {
+  handleSubmit = (id, player) => {
     this.setState({
       [id]: player,
     });
   }
 
-  handleReset(id) {
+  handleReset = (id) => {
     this.setState({
       [id]: null,
     })
   }
 
   render() {
-    const { playerOne, playerTwo, battle } = this.state;
+    const { playerOne, playerTwo } = this.state;
     const disabled = !playerOne || !playerTwo;
-
-    if (battle === true) {
-      return <Results playerOne={playerOne} playerTwo={playerTwo} />
-    }
 
     return (
       <main className="stack main-stack animate-in">
         <div className="split">
           <h1>Players</h1>
-          <button onClick={() => {
-              this.setState({battle: true});
+          <Link to = {{
+            pathname: '/results',
+            search: `?playerOne=${playerOne}&playerTwo=${playerTwo}`
             }}
             className={`btn primary ${disabled ? "disabled" : ""}`}>
             Battle
-          </button>
+          </Link>
         </div>
         <section className="grid">
           {playerOne === null ? (

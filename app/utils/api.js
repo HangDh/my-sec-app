@@ -16,7 +16,7 @@ export function fetchPopularRepos(language) {
 
 function getErrorMsg(message, username) {
   if (message == 'Not Found') {
-    return `{$username} doesn't exist`
+    return `${username} doesn't exist`
   }
 
   return message
